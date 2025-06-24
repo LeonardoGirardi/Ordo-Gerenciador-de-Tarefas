@@ -1,0 +1,13 @@
+.calendar-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #3a8dde, #1b4f72);
+  padding-top: 70px; /* Para compensar a navbar fixa */
+}
+
+.calendar-card {
+  max-width: 500px;
+  background-color: #ffffff;
+}

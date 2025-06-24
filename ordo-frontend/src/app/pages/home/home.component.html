@@ -1,0 +1,15 @@
+
+<div class="home-page">
+  <div class="home-card">
+    <h1 class="title">Bem-vindo ao Ordo</h1>
+    <p class="subtitle">Organize suas tarefas com facilidade</p>
+
+    <div class="info">
+      <span>Hoje é <strong>{{ hoje | date: 'fullDate' }}</strong></span>
+    </div>
+
+    <button class="btn btn-primary" (click)="irParaKanban()">
+      Ver tarefas de hoje
+    </button>
+  </div>
+</div>
