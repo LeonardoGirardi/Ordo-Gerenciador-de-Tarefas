@@ -1,76 +1,27 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top"
-     role="navigation"
-     aria-label="Navegação principal">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold ms-3" [routerLink]="'/'">Ordo</a>
 
-  <div class="container-fluid px-3 px-md-4">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarOrdo">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <!-- Logo/Brand -->
-    <div class="navbar-brand d-flex align-items-center">
-      <div class="brand-logo me-2">
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <rect width="32" height="32" rx="6" fill="url(#gradient)" />
-          <path d="M8 12h16v2H8v-2zm0 4h16v2H8v-2zm0 4h12v2H8v-2z" fill="white" opacity="0.9"/>
-          <defs>
-            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#4F8EDB" />
-              <stop offset="100%" stop-color="#6BA3E8" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-      <span class="brand-text fw-bold text-primary fs-4">Ordo</span>
-    </div>
-
-    <!-- User Actions -->
-    <div class="navbar-nav ms-auto d-flex flex-row align-items-center">
-
-      <!-- Profile Button -->
-      <div class="nav-item dropdown me-2 me-md-3">
-        <button class="btn btn-link nav-link p-0 border-0 bg-transparent profile-btn"
-                type="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                aria-label="Menu do perfil do usuário"
-                (click)="onProfileClick()">
-
-          <!-- Avatar with initials fallback -->
-          <div class="user-avatar position-relative">
-            <div class="avatar-circle d-flex align-items-center justify-content-center">
-              <span class="avatar-initials fw-semibold">{{ getUserInitials() }}</span>
-            </div>
-            <div class="avatar-status"></div>
-          </div>
-        </button>
-
-        <!-- Dropdown menu (preparado para futuras expansões) -->
-        <ul class="dropdown-menu dropdown-menu-end shadow-sm mt-2" aria-labelledby="profileDropdown">
-          <li>
-            <a class="dropdown-item d-flex align-items-center" href="#" (click)="onProfileClick()">
-              <i class="bi bi-person me-2" aria-hidden="true"></i>
-              Meu Perfil
-            </a>
-          </li>
-          <li><hr class="dropdown-divider"></li>
-          <li>
-            <a class="dropdown-item d-flex align-items-center text-danger" href="#" (click)="onLogout()">
-              <i class="bi bi-box-arrow-right me-2" aria-hidden="true"></i>
-              Sair
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Logout Button -->
-      <div class="nav-item">
-        <button class="btn btn-outline-secondary btn-sm logout-btn d-flex align-items-center"
-                type="button"
-                aria-label="Sair do sistema"
-                title="Sair do sistema"
-                (click)="onLogout()">
-          <i class="bi bi-box-arrow-right me-1 me-md-2" aria-hidden="true"></i>
-          <span class="d-none d-md-inline">Sair</span>
-        </button>
-      </div>
+    <div class="collapse navbar-collapse" id="navbarOrdo">
+      <ul class="navbar-nav ms-auto me-3">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="'/kanban'" routerLinkActive="active">Kanban</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="'/calendar'" routerLinkActive="active">Calendário</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="'/profile'" routerLinkActive="active">Perfil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="'/login'" routerLinkActive="active">Sair</a>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
+
