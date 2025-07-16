@@ -1,33 +1,110 @@
 <div class="container-fluid mt-5 pt-4">
+  <!-- Header com a data atual -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h2 class="text-center mb-2">Quadro de Tarefas</h2>
+      <p class="text-center text-muted">{{ getFormattedDate() }}</p>
+    </div>
+  </div>
+
+  <!-- Kanban Board -->
   <div class="row">
-    <div class="col-md-4">
-      <h5 class="text-primary mb-3">A Fazer</h5>
-      <div class="card mb-3" *ngFor="let tarefa of tarefasAFazer">
-        <div class="card-body">
-          <h6 class="card-title">{{ tarefa.titulo }}</h6>
-          <p class="card-text">{{ tarefa.descricao }}</p>
+    <!-- Coluna A Fazer -->
+    <div class="col-md-4 mb-4">
+      <div class="kanban-column">
+        <h5 class="text-primary mb-3 column-header">
+          <i class="fas fa-clock"></i> A Fazer
+          <span class="badge bg-primary ms-2">{{ tarefasAFazer.length }}</span>
+        </h5>
+        <div class="column-content">
+          <div class="card mb-3 task-card" *ngFor="let tarefa of tarefasAFazer">
+            <div class="card-body">
+              <h6 class="card-title">{{ tarefa.titulo }}</h6>
+              <p class="card-text">{{ tarefa.descricao }}</p>
+              <button
+                class="btn btn-sm btn-outline-warning move-btn"
+                (click)="moveTask(tarefa.id, getNextStatus(tarefa.status))">
+                <i class="fas fa-arrow-right"></i>
+                Mover para {{ getNextStatusLabel(tarefa.status) }}
+              </button>
+            </div>
+          </div>
+          <div *ngIf="tarefasAFazer.length === 0" class="empty-column">
+            <i class="fas fa-clipboard-list text-muted"></i>
+            <p class="text-muted mt-2">Nenhuma tarefa pendente</p>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="col-md-4">
-      <h5 class="text-warning mb-3">Em Progresso</h5>
-      <div class="card mb-3" *ngFor="let tarefa of tarefasEmProgresso">
-        <div class="card-body">
-          <h6 class="card-title">{{ tarefa.titulo }}</h6>
-          <p class="card-text">{{ tarefa.descricao }}</p>
+    <!-- Coluna Em Progresso -->
+    <div class="col-md-4 mb-4">
+      <div class="kanban-column">
+        <h5 class="text-warning mb-3 column-header">
+          <i class="fas fa-play"></i> Em Progresso
+          <span class="badge bg-warning ms-2">{{ tarefasEmProgresso.length }}</span>
+        </h5>
+        <div class="column-content">
+          <div class="card mb-3 task-card in-progress" *ngFor="let tarefa of tarefasEmProgresso">
+            <div class="card-body">
+              <h6 class="card-title">{{ tarefa.titulo }}</h6>
+              <p class="card-text">{{ tarefa.descricao }}</p>
+              <button
+                class="btn btn-sm btn-outline-success move-btn"
+                (click)="moveTask(tarefa.id, getNextStatus(tarefa.status))">
+                <i class="fas fa-arrow-right"></i>
+                Mover para {{ getNextStatusLabel(tarefa.status) }}
+              </button>
+            </div>
+          </div>
+          <div *ngIf="tarefasEmProgresso.length === 0" class="empty-column">
+            <i class="fas fa-spinner text-muted"></i>
+            <p class="text-muted mt-2">Nenhuma tarefa em progresso</p>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="col-md-4">
-      <h5 class="text-success mb-3">Concluído</h5>
-      <div class="card mb-3" *ngFor="let tarefa of tarefasConcluidas">
-        <div class="card-body">
-          <h6 class="card-title">{{ tarefa.titulo }}</h6>
-          <p class="card-text">{{ tarefa.descricao }}</p>
+    <!-- Coluna Concluído -->
+    <div class="col-md-4 mb-4">
+      <div class="kanban-column">
+        <h5 class="text-success mb-3 column-header">
+          <i class="fas fa-check"></i> Concluído
+          <span class="badge bg-success ms-2">{{ tarefasConcluidas.length }}</span>
+        </h5>
+        <div class="column-content">
+          <div class="card mb-3 task-card completed" *ngFor="let tarefa of tarefasConcluidas">
+            <div class="card-body">
+              <h6 class="card-title">{{ tarefa.titulo }}</h6>
+              <p class="card-text">{{ tarefa.descricao }}</p>
+              <button
+                class="btn btn-sm btn-outline-primary move-btn"
+                (click)="moveTask(tarefa.id, getNextStatus(tarefa.status))">
+                <i class="fas fa-redo"></i>
+                Mover para {{ getNextStatusLabel(tarefa.status) }}
+              </button>
+            </div>
+          </div>
+          <div *ngIf="tarefasConcluidas.length === 0" class="empty-column">
+            <i class="fas fa-check-circle text-muted"></i>
+            <p class="text-muted mt-2">Nenhuma tarefa concluída</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+
+  <!-- Botão flutuante para adicionar nova tarefa -->
+  <button
+    class="btn btn-primary btn-floating"
+    (click)="openModal()"
+    title="Nova Tarefa">
+    <i class="fas fa-plus"></i>
+  </button>
+
+  <app-new-task-modal
+    [isOpen]="isModalOpen"
+    [currentDate]="currentDate"
+    (taskCreated)="closeModal()"
+    (modalClosed)="closeModal()">
+  </app-new-task-modal></div>

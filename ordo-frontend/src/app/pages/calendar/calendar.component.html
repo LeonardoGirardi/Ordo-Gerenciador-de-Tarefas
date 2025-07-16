@@ -1,9 +1,56 @@
 <div class="calendar-page">
-  <div class="calendar-card shadow p-5 rounded-4 text-center bg-white">
-    <h2 class="fw-bold">Calendário</h2>
-    <p class="text-muted">Visualize suas tarefas em formato de calendário</p>
-    <p>Hoje é <strong>{{ today | date: 'fullDate' }}</strong></p>
+  <div class="calendar-card shadow p-4 rounded-4 bg-white">
+    <!-- Cabeçalho do calendário -->
+    <div class="calendar-header d-flex justify-content-between align-items-center mb-4">
+      <button class="btn btn-outline-primary btn-sm" (click)="previousMonth()">
+        <i class="fas fa-chevron-left"></i>
+      </button>
 
-    <button class="btn btn-primary mt-3">Abrir calendário completo</button>
+      <div class="text-center">
+        <h2 class="fw-bold mb-0">{{ getCurrentMonthYear() }}</h2>
+        <button class="btn btn-link btn-sm text-muted p-0" (click)="goToToday()">
+          Ir para hoje
+        </button>
+      </div>
+
+      <button class="btn btn-outline-primary btn-sm" (click)="nextMonth()">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Dias da semana -->
+    <div class="row mb-2">
+      <div class="col text-center fw-bold text-muted" *ngFor="let dayName of dayNames">
+        {{ dayName }}
+      </div>
+    </div>
+
+    <!-- Grade do calendário -->
+    <div class="calendar-grid">
+      <div class="row g-1" *ngFor="let week of calendarDays | slice:0:42; let i = index">
+        <div class="col" *ngIf="i % 7 === 0">
+          <div class="row g-1">
+            <div class="col" *ngFor="let day of calendarDays | slice:(i):(i + 7)">
+              <button
+                [class]="getDayButtonClass(day)"
+                (click)="onDayClick(day)"
+                [attr.aria-label]="'Dia ' + day.dayNumber + ' de ' + getCurrentMonthYear()">
+                {{ day.dayNumber }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Informações adicionais -->
+    <div class="text-center mt-4">
+      <p class="text-muted mb-2">
+        <small>Hoje é <strong>{{ today | date: 'dd/MM/yyyy' }}</strong></small>
+      </p>
+      <p class="text-muted">
+        <small>Clique em qualquer dia para visualizar as tarefas</small>
+      </p>
+    </div>
   </div>
 </div>

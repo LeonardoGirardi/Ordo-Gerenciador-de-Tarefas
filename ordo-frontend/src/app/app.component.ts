@@ -1,19 +1,13 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { NavbarComponent } from './components/navbar/navbar.component';
+import { RouterOutlet } from '@angular/router'; // necessário!
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterModule, NavbarComponent],
-  templateUrl: './app.component.html'
+  imports: [RouterOutlet], // aqui importa o RouterOutlet
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private router: Router) {}
-
-  exibirNavbar(): boolean {
-    return this.router.url !== '/login';
-  }
+  title = 'ordo';
 }

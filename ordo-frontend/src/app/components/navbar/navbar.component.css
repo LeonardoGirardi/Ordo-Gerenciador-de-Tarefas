@@ -1,30 +1,215 @@
-.navbar {
-  padding: 0.75rem 1.5rem;
-  background-color: #ffffff;
+/* Navbar principal */
+.custom-navbar {
+  background-color: #ffffff !important;
   border-bottom: 1px solid #e5e7eb;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 0.75rem 0;
+  transition: all 0.3s ease;
   z-index: 1030;
 }
 
-.navbar-brand {
+/* Logo/Brand */
+.brand-logo {
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.brand-logo:hover {
+  transform: scale(1.05);
+}
+
+.brand-text {
+  font-size: 1.75rem;
   font-weight: 700;
-  letter-spacing: 1px;
-  font-size: 1.4rem;
-  color: #2563eb !important;
+  color: #2563eb;
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
+/* Navigation links (mobile) */
 .navbar-nav .nav-link {
+  color: #374151;
   font-weight: 500;
-  margin-left: 1rem;
-  color: #1e293b !important;
-  transition: color 0.2s ease-in-out;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  margin: 0.125rem 0;
 }
 
-.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:hover {
+  color: #2563eb;
+  background-color: #f3f4f6;
+}
+
 .navbar-nav .nav-link.active {
-  color: #2563eb !important;
+  color: #2563eb;
+  background-color: #eff6ff;
 }
 
+/* Botão de notificação */
+.nav-icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  margin-right: 0.5rem;
+}
+
+.nav-icon-btn:hover {
+  background-color: #f3f4f6;
+  color: #2563eb;
+}
+
+.nav-icon-btn i {
+  font-size: 1.1rem;
+}
+
+/* Badge de notificação */
+.notification-badge {
+  font-size: 0.65rem;
+  min-width: 18px;
+  height: 18px;
+  line-height: 18px;
+  text-align: center;
+}
+
+/* Dropdown do usuário */
+.user-dropdown {
+  color: #374151;
+  text-decoration: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.user-dropdown:hover {
+  background-color: #f3f4f6;
+  color: #2563eb;
+  border-color: #e5e7eb;
+}
+
+/* Avatar do usuário */
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.875rem;
+}
+
+/* Nome do usuário */
+.user-name {
+  font-weight: 500;
+  color: #374151;
+  font-size: 0.875rem;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 0.5rem 0;
+  min-width: 180px;
+  margin-top: 0.5rem;
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem;
+  color: #374151;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f3f4f6;
+  color: #2563eb;
+}
+
+.dropdown-item.text-danger:hover {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.dropdown-item i {
+  width: 16px;
+  font-size: 0.875rem;
+}
+
+/* Toggler personalizado */
 .navbar-toggler {
-  border: none;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.navbar-toggler:hover {
+  background-color: #f3f4f6;
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+}
+
+/* Responsividade */
+@media (max-width: 991.98px) {
+  .custom-navbar {
+    padding: 0.5rem 0;
+  }
+
+  .navbar-collapse {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .user-dropdown {
+    justify-content: center;
+  }
+
+  .nav-icon-btn {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Animações suaves */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-menu.show {
+  animation: fadeIn 0.2s ease;
+}
+
+/* Estados de foco para acessibilidade */
+.nav-icon-btn:focus,
+.user-dropdown:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Efeito hover suave para todos os elementos interativos */
+.navbar-brand,
+.nav-link,
+.nav-icon-btn,
+.user-dropdown,
+.dropdown-item {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }

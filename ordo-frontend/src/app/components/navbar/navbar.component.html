@@ -1,27 +1,65 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
-  <div class="container-fluid">
-    <a class="navbar-brand fw-bold ms-3" [routerLink]="'/'">Ordo</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm custom-navbar">
+  <div class="container-fluid px-4">
+    <!-- Logo/Brand -->
+    <a class="navbar-brand fw-bold brand-logo" [routerLink]="'/home'">
+      <span class="brand-text">Ordo</span>
+    </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarOrdo">
+    <!-- Mobile toggle button -->
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarOrdo"
+            aria-controls="navbarOrdo" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
+    <!-- Navbar content -->
     <div class="collapse navbar-collapse" id="navbarOrdo">
-      <ul class="navbar-nav ms-auto me-3">
+      <!-- Navigation links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="'/kanban'" routerLinkActive="active">Kanban</a>
+          <a class="nav-link px-3 py-2" [routerLink]="'/kanban'" routerLinkActive="active">
+            <i class="fas fa-columns me-2"></i>Kanban
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="'/calendar'" routerLinkActive="active">Calendário</a>
+          <a class="nav-link px-3 py-2" [routerLink]="'/calendar'" routerLinkActive="active">
+            <i class="fas fa-calendar-alt me-2"></i>Calendário
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="'/profile'" routerLinkActive="active">Perfil</a>
+          <a class="nav-link px-3 py-2" [routerLink]="'/profile'" routerLinkActive="active">
+            <i class="fas fa-user me-2"></i>Perfil
+          </a>
         </li>
+      </ul>
+
+      <!-- Right side actions -->
+      <ul class="navbar-nav ms-auto align-items-center">
+        <!-- Notifications -->
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="'/login'" routerLinkActive="active">Sair</a>
+          <button class="btn btn-link nav-icon-btn position-relative" type="button" title="Notificações">
+            <i class="fas fa-bell"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-badge">
+              3
+            </span>
+          </button>
+        </li>
+
+        <!-- User dropdown -->
+        <li class="nav-item d-flex align-items-center">
+          <a class="nav-link px-3 py-2 d-flex align-items-center" [routerLink]="'/profile'" routerLinkActive="active">
+            <i class="fas fa-user me-2"></i>
+            <span class="d-none d-md-inline">João Silva</span>
+          </a>
+        </li>
+
+
+        <!-- Logout (último item à direita) -->
+        <li class="nav-item">
+          <a class="nav-link px-3 py-2 text-danger" (click)="logout()" style="cursor: pointer;">
+            <i class="fas fa-sign-out-alt me-2"></i>Sair
+          </a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
-

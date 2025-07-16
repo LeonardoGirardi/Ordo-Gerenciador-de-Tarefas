@@ -1,1 +1,99 @@
-<p>new-task-modal works!</p>
+<div *ngIf="isOpen" class="modal fade show d-block" tabindex="-1" role="dialog" (click)="onBackdropClick($event)">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="fas fa-plus-circle text-primary"></i>
+          Nova Tarefa
+        </h5>
+        <button type="button" class="btn-close" (click)="onCancel()"></button>
+      </div>
+
+      <form (ngSubmit)="onSubmit()" novalidate>
+        <div class="modal-body">
+          <!-- Campo Título -->
+          <div class="mb-3">
+            <label for="titulo" class="form-label">
+              Título <span class="text-danger">*</span>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="titulo"
+              name="titulo"
+              [(ngModel)]="titulo"
+              [class.is-invalid]="titulo.length > 0 && !isTituloValid"
+              [class.is-valid]="isTituloValid"
+              placeholder="Digite o título da tarefa..."
+              maxlength="100"
+              required>
+            <div *ngIf="titulo.length > 0 && !isTituloValid" class="invalid-feedback">
+              O título deve ter pelo menos 3 caracteres.
+            </div>
+            <div *ngIf="isTituloValid" class="valid-feedback">
+              Título válido!
+            </div>
+          </div>
+
+          <!-- Campo Descrição -->
+          <div class="mb-3">
+            <label for="descricao" class="form-label">
+              Descrição <span class="text-danger">*</span>
+            </label>
+            <textarea
+              class="form-control"
+              id="descricao"
+              name="descricao"
+              [(ngModel)]="descricao"
+              [class.is-invalid]="descricao.length > 0 && !isDescricaoValid"
+              [class.is-valid]="isDescricaoValid"
+              placeholder="Digite a descrição da tarefa..."
+              rows="4"
+              maxlength="500"
+              required></textarea>
+            <div *ngIf="descricao.length > 0 && !isDescricaoValid" class="invalid-feedback">
+              A descrição deve ter pelo menos 5 caracteres.
+            </div>
+            <div *ngIf="isDescricaoValid" class="valid-feedback">
+              Descrição válida!
+            </div>
+          </div>
+
+          <!-- Informações adicionais -->
+          <div class="alert alert-info d-flex align-items-center">
+            <i class="fas fa-info-circle me-2"></i>
+            <div>
+              <strong>Informações:</strong><br>
+              <small>
+                • A tarefa será criada com status "A Fazer"<br>
+                • Data: {{ currentDate || getCurrentDate() }}
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="onCancel()"
+            [disabled]="isSubmitting">
+            <i class="fas fa-times"></i>
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!isFormValid || isSubmitting">
+            <i class="fas fa-plus" *ngIf="!isSubmitting"></i>
+            <i class="fas fa-spinner fa-spin" *ngIf="isSubmitting"></i>
+            {{ isSubmitting ? 'Criando...' : 'Criar Tarefa' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Backdrop overlay -->
+<div *ngIf="isOpen" class="modal-backdrop fade show"></div>

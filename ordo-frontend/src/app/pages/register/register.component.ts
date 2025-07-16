@@ -21,7 +21,7 @@ export class RegisterComponent {
     private router: Router
   ) {
     this.form = this.fb.group({
-      username: ['', Validators.required],
+      name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
@@ -30,9 +30,9 @@ export class RegisterComponent {
   register() {
     if (this.form.invalid) return;
 
-    const { username, email, password } = this.form.value;
+    const { name, email, password } = this.form.value;
 
-    this.http.post('http://localhost:3000/auth/register', { username, email, password })
+    this.http.post('http://localhost:3000/api/register', { name, email, password })
       .subscribe({
         next: () => {
           this.router.navigate(['/login']);
