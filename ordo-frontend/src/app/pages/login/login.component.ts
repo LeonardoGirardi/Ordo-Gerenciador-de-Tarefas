@@ -31,10 +31,10 @@ export class LoginComponent {
 
     const { email, password } = this.form.value;
 
-    this.http.post<{ token: string }>('http://localhost:3000/auth/login', { email, password })
+    this.http.post<{ token: string }>('http://localhost:3000/api/login', { email, password })
       .subscribe({
         next: res => {
-          localStorage.setItem('token', res.token);
+          localStorage.setItem('ordo_token', res.token);
           this.router.navigate(['/home']);
         },
         error: () => {

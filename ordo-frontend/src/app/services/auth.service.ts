@@ -40,4 +40,9 @@ export class AuthService {
     const token = this.getToken();
     return new HttpHeaders({ Authorization: `Bearer ${token}` });
   }
+
+  getCurrentUser(): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.get('http://localhost:3000/api/me', { headers });
+  }
 }

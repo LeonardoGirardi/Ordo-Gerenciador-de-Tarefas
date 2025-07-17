@@ -44,13 +44,11 @@
           </button>
         </li>
 
-        <!-- User dropdown -->
-        <li class="nav-item d-flex align-items-center">
-          <a class="nav-link px-3 py-2 d-flex align-items-center" [routerLink]="'/profile'" routerLinkActive="active">
-            <i class="fas fa-user me-2"></i>
-            <span class="d-none d-md-inline">João Silva</span>
-          </a>
-        </li>
+        <!-- Nome do usuário -->
+        <a class="nav-link px-3 py-2 d-flex align-items-center" [routerLink]="'/profile'" routerLinkActive="active">
+          <i class="fas fa-user me-2"></i>
+          <span class="d-none d-md-inline">{{ userName }}</span>
+        </a>
 
 
         <!-- Logout (último item à direita) -->

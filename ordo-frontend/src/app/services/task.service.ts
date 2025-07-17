@@ -7,7 +7,7 @@ export interface Task {
   id: string;
   titulo: string;
   descricao: string;
-  status: 'todo' | 'in_progress' | 'done';
+  status: 'todo' | 'in-progress' | 'completed'
   data: string;
 }
 
@@ -32,9 +32,9 @@ export class TaskService {
     const sampleTasks: Task[] = [
       { id: '1', titulo: 'Estudar Angular', descricao: 'Assistir aulas 5 e 6 do curso', status: 'todo', data: today },
       { id: '2', titulo: 'Criar layout Kanban', descricao: 'Finalizar HTML e CSS do componente', status: 'todo', data: today },
-      { id: '3', titulo: 'Documentar projeto', descricao: 'Adicionar seções no README', status: 'in_progress', data: today },
-      { id: '4', titulo: 'Configurar Navbar', descricao: 'Navbar com perfil e sair', status: 'done', data: today },
-      { id: '5', titulo: 'Implementar autenticação', descricao: 'Login e logout com JWT', status: 'in_progress', data: today }
+      { id: '3', titulo: 'Documentar projeto', descricao: 'Adicionar seções no README', status: 'in-progress', data: today },
+      { id: '4', titulo: 'Configurar Navbar', descricao: 'Navbar com perfil e sair', status: 'completed', data: today },
+      { id: '5', titulo: 'Implementar autenticação', descricao: 'Login e logout com JWT', status: 'in-progress', data: today }
     ];
     this.tasks.set(today, sampleTasks);
   }
@@ -59,7 +59,7 @@ export class TaskService {
     return newTask;
   }
 
-  updateTaskStatus(taskId: string, newStatus: 'todo' | 'in_progress' | 'done'): boolean {
+    updateTaskStatus(taskId: string, newStatus: "todo" | "in-progress" | "completed"): boolean {
     for (const [date, tasks] of this.tasks.entries()) {
       const taskIndex = tasks.findIndex(t => t.id === taskId);
       if (taskIndex !== -1) {
@@ -107,8 +107,8 @@ export class TaskService {
     const tasks = this.getTasksByDate(date);
     return {
       todo: tasks.filter(t => t.status === 'todo').length,
-      in_progress: tasks.filter(t => t.status === 'in_progress').length,
-      done: tasks.filter(t => t.status === 'done').length,
+      in_progress: tasks.filter(t => t.status === 'in-progress').length,
+      done: tasks.filter(t => t.status === 'completed').length,
       total: tasks.length
     };
   }

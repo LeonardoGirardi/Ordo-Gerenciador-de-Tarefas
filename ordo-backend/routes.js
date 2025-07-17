@@ -78,4 +78,15 @@ router.get('/tasks', auth, async (req, res) => {
     }
 });
 
+router.get('/me', auth, async (req, res) => {
+    try {
+        const result = await pool.query('SELECT id, name, email FROM users WHERE id = $1', [req.userId]);
+        const user = result.rows[0];
+        if (!user) return res.status(404).send({ error: 'Usuário não encontrado' });
+        res.send(user);
+    } catch (err) {
+        res.status(500).send({ error: 'Erro ao buscar usuário' });
+    }
+});
+
 module.exports = router;

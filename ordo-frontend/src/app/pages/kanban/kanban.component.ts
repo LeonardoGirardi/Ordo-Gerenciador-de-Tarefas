@@ -41,25 +41,20 @@ export class KanbanComponent implements OnInit {
     const tasks = this.taskService.getTasksByDate(this.currentDate);
 
     this.tarefasAFazer = tasks.filter(task => task.status === 'todo');
-    this.tarefasEmProgresso = tasks.filter(task => task.status === 'in_progress');
-    this.tarefasConcluidas = tasks.filter(task => task.status === 'done');
+    this.tarefasEmProgresso = tasks.filter(task => task.status === 'in-progress');
+    this.tarefasConcluidas = tasks.filter(task => task.status === 'completed');
   }
 
-  moveTask(taskId: string, newStatus: 'todo' | 'in_progress' | 'done'): void {
+  moveTask(taskId: string, newStatus: 'todo' | 'in-progress' | 'completed') {
     this.taskService.updateTaskStatus(taskId, newStatus);
-    this.loadTasks(); // Recarrega as tarefas após a atualização
+    this.loadTasks();
   }
-
-  getNextStatus(currentStatus: string): 'todo' | 'in_progress' | 'done' {
+  getNextStatus(currentStatus: string): 'todo' | 'in-progress' | 'completed' {
     switch (currentStatus) {
-      case 'todo':
-        return 'in_progress';
-      case 'in_progress':
-        return 'done';
-      case 'done':
-        return 'todo';
-      default:
-        return 'todo';
+      case 'todo': return 'in-progress';
+      case 'in-progress': return 'completed';
+      case 'completed': return 'todo';
+      default: return 'todo';
     }
   }
 
