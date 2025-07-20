@@ -1,14 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-export interface Task {
-  id?: number;
-  titulo: string;
-  descricao: string;
-  status: 'todo' | 'in-progress' | 'completed';
-  data: string;
-}
+import { TaskService, Task } from '../../services/task.service';
 
 @Component({
   selector: 'app-new-task-modal',
@@ -23,12 +16,12 @@ export class NewTaskModalComponent {
   @Output() taskCreated = new EventEmitter<Task>();
   @Output() modalClosed = new EventEmitter<void>();
 
-  // Propriedades do formulário
   titulo = '';
   descricao = '';
   isSubmitting = false;
 
-  // Validações
+  constructor(private taskService: TaskService) {}
+
   get isTituloValid(): boolean {
     return this.titulo.trim().length >= 3;
   }
@@ -48,16 +41,24 @@ export class NewTaskModalComponent {
 
     this.isSubmitting = true;
 
-    const newTask: Task = {
+    const newTask: Omit<Task, 'id'> = {
       titulo: this.titulo.trim(),
       descricao: this.descricao.trim(),
       status: 'todo',
       data: this.currentDate || this.getCurrentDate()
     };
 
-    this.taskCreated.emit(newTask);
-    this.resetForm();
-    this.isSubmitting = false;
+    this.taskService.createTask(newTask).subscribe({
+      next: (createdTask) => {
+        this.taskCreated.emit(createdTask);
+        this.resetForm();
+        this.isSubmitting = false;
+      },
+      error: () => {
+        // Aqui você pode mostrar erro com snackbar/toast, se desejar
+        this.isSubmitting = false;
+      }
+    });
   }
 
   onCancel(): void {
@@ -73,10 +74,9 @@ export class NewTaskModalComponent {
 
   getCurrentDate(): string {
     const now = new Date();
-    return now.toLocaleDateString('pt-BR');
+    return now.toISOString().split('T')[0];
   }
 
-  // Método para fechar modal ao clicar no backdrop
   onBackdropClick(event: Event): void {
     if (event.target === event.currentTarget) {
       this.onCancel();

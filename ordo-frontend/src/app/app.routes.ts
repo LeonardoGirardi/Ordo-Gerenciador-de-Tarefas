@@ -1,25 +1,38 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { HomeComponent } from './pages/home/home.component';
-import { KanbanComponent } from './pages/kanban/kanban.component';
-import { CalendarComponent } from './pages/calendar/calendar.component';
-import { UserProfileComponent } from './pages/user-profile/user-profile.component';
-import {MainLayoutComponent} from './layouts/main-layout/main-layout.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+
+  {
+    path: 'login',
+    loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent)
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./pages/register/register.component').then(m => m.RegisterComponent)
+  },
   {
     path: '',
-    component: MainLayoutComponent,
+    loadComponent: () => import('./layouts/main-layout/main-layout.component').then(m => m.MainLayoutComponent),
     children: [
-      { path: 'home', component: HomeComponent },
-      { path: 'kanban', component: KanbanComponent },
-      { path: 'calendar', component: CalendarComponent },
-      { path: 'profile', component: UserProfileComponent }
+      {
+        path: 'home',
+        loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent)
+      },
+      {
+        path: 'kanban',
+        loadComponent: () => import('./pages/kanban/kanban.component').then(m => m.KanbanComponent)
+      },
+      {
+        path: 'calendar',
+        loadComponent: () => import('./pages/calendar/calendar.component').then(m => m.CalendarComponent)
+      },
+      {
+        path: 'profile',
+        loadComponent: () => import('./pages/user-profile/user-profile.component').then(m => m.UserProfileComponent)
+      }
     ]
   },
+
   { path: '**', redirectTo: 'login' }
 ];

@@ -1,16 +1,21 @@
+<!-- Modal Overlay -->
 <div *ngIf="isOpen" class="modal fade show d-block" tabindex="-1" role="dialog" (click)="onBackdropClick($event)">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
+
+      <!-- Header -->
       <div class="modal-header">
         <h5 class="modal-title">
-          <i class="fas fa-plus-circle text-primary"></i>
+          <i class="fas fa-plus-circle text-primary me-1"></i>
           Nova Tarefa
         </h5>
-        <button type="button" class="btn-close" (click)="onCancel()"></button>
+        <button type="button" class="btn-close" aria-label="Fechar" (click)="onCancel()"></button>
       </div>
 
+      <!-- Formulário -->
       <form (ngSubmit)="onSubmit()" novalidate>
         <div class="modal-body">
+
           <!-- Campo Título -->
           <div class="mb-3">
             <label for="titulo" class="form-label">
@@ -18,15 +23,17 @@
             </label>
             <input
               type="text"
-              class="form-control"
               id="titulo"
               name="titulo"
+              class="form-control"
               [(ngModel)]="titulo"
               [class.is-invalid]="titulo.length > 0 && !isTituloValid"
               [class.is-valid]="isTituloValid"
               placeholder="Digite o título da tarefa..."
               maxlength="100"
-              required>
+              required
+              autofocus
+            />
             <div *ngIf="titulo.length > 0 && !isTituloValid" class="invalid-feedback">
               O título deve ter pelo menos 3 caracteres.
             </div>
@@ -41,16 +48,17 @@
               Descrição <span class="text-danger">*</span>
             </label>
             <textarea
-              class="form-control"
               id="descricao"
               name="descricao"
+              class="form-control"
               [(ngModel)]="descricao"
               [class.is-invalid]="descricao.length > 0 && !isDescricaoValid"
               [class.is-valid]="isDescricaoValid"
               placeholder="Digite a descrição da tarefa..."
               rows="4"
               maxlength="500"
-              required></textarea>
+              required
+            ></textarea>
             <div *ngIf="descricao.length > 0 && !isDescricaoValid" class="invalid-feedback">
               A descrição deve ter pelo menos 5 caracteres.
             </div>
@@ -60,33 +68,36 @@
           </div>
 
           <!-- Informações adicionais -->
-          <div class="alert alert-info d-flex align-items-center">
-            <i class="fas fa-info-circle me-2"></i>
+          <div class="alert alert-info d-flex align-items-start">
+            <i class="fas fa-info-circle me-2 mt-1"></i>
             <div>
-              <strong>Informações:</strong><br>
+              <strong>Informações:</strong><br />
               <small>
-                • A tarefa será criada com status "A Fazer"<br>
+                • A tarefa será criada com status <strong>"A Fazer"</strong><br />
                 • Data: {{ currentDate || getCurrentDate() }}
               </small>
             </div>
           </div>
+
         </div>
 
+        <!-- Footer -->
         <div class="modal-footer">
           <button
             type="button"
             class="btn btn-secondary"
             (click)="onCancel()"
-            [disabled]="isSubmitting">
-            <i class="fas fa-times"></i>
-            Cancelar
+            [disabled]="isSubmitting"
+          >
+            <i class="fas fa-times me-1"></i> Cancelar
           </button>
           <button
             type="submit"
             class="btn btn-primary"
-            [disabled]="!isFormValid || isSubmitting">
-            <i class="fas fa-plus" *ngIf="!isSubmitting"></i>
-            <i class="fas fa-spinner fa-spin" *ngIf="isSubmitting"></i>
+            [disabled]="!isFormValid || isSubmitting"
+          >
+            <i class="fas fa-plus me-1" *ngIf="!isSubmitting"></i>
+            <i class="fas fa-spinner fa-spin me-1" *ngIf="isSubmitting"></i>
             {{ isSubmitting ? 'Criando...' : 'Criar Tarefa' }}
           </button>
         </div>
@@ -95,5 +106,6 @@
   </div>
 </div>
 
-<!-- Backdrop overlay -->
+<!-- Backdrop -->
 <div *ngIf="isOpen" class="modal-backdrop fade show"></div>
+

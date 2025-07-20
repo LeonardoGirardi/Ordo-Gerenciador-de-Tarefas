@@ -1,17 +1,17 @@
 
+// navbar.component.ts
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import {AuthService} from '../../services/auth.service';
-import {HttpClientModule} from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
-  imports: [CommonModule, RouterLink, HttpClientModule, ]
+  imports: [CommonModule, RouterLink, RouterLinkActive]
 })
 export class NavbarComponent implements OnInit {
   userName: string = '';
@@ -20,23 +20,13 @@ export class NavbarComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.loadUserData();
-  }
-
-  loadUserData(): void {
-    this.authService.getCurrentUser().subscribe({
-      next: user => {
-        this.userName = user.name;
-      },
-      error: () => {
-        this.userName = 'Desconhecido';
-      }
+    this.authService.getCurrentUser().subscribe(user => {
+      this.userName = user?.name || 'Desconhecido';
     });
   }
 
   logout(): void {
-    localStorage.removeItem('ordo_token');
-    localStorage.removeItem('ordo_user');
+    this.authService.logout();
     this.router.navigate(['/login']);
   }
 
@@ -48,3 +38,4 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/profile']);
   }
 }
+

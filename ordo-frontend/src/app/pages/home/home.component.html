@@ -1,15 +1,100 @@
+<div class="container pt-3">
+  <div class="home-page">
+    <!-- Seção Principal -->
+    <div class="main-card">
+      <div class="welcome-section">
+        <h1 class="user-greeting">Bem-vindo, {{ userName }} 👋</h1>
+        <p class="subtitle">Organize suas tarefas com facilidade</p>
+      </div>
 
-<div class="home-page">
-  <div class="home-card">
-    <h1 class="title">Bem-vindo ao Ordo</h1>
-    <p class="subtitle">Organize suas tarefas com facilidade</p>
+      <div class="date-info">
+        <i class="fas fa-calendar-day"></i>
+        Hoje é <strong>{{ getFormattedDate() }}</strong>
+      </div>
 
-    <div class="info">
-      <span>Hoje é <strong>{{ hoje | date: 'fullDate' }}</strong></span>
+      <div class="task-summary">
+        <h3><i class="fas fa-tasks"></i> Resumo do Dia</h3>
+        <p>
+          Você tem <strong>{{ emAndamento }} tarefas em progresso</strong> e
+          <strong>{{ pendentes }} pendentes</strong>.
+        </p>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-label">
+          <span><i class="fas fa-chart-line"></i> Progresso do Dia</span>
+          <span>{{ progresso }}%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="progresso"></div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" (click)="irParaKanban()">
+        <i class="fas fa-eye"></i> Ver tarefas de hoje
+      </button>
+
+      <div class="quick-actions">
+        <button class="btn btn-secondary" (click)="criarTarefa()">
+          <i class="fas fa-plus"></i> Nova Tarefa
+        </button>
+        <button class="btn btn-secondary" (click)="verRelatorio()">
+          <i class="fas fa-chart-pie"></i> Relatório
+        </button>
+      </div>
     </div>
 
-    <button class="btn btn-primary" (click)="irParaKanban()">
-      Ver tarefas de hoje
-    </button>
+    <!-- Dashboard com Estatísticas -->
+    <div class="dashboard-section">
+      <div class="stats-grid">
+        <div class="stat-card pending">
+          <div class="stat-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="stat-number">{{ pendentes }}</div>
+          <div class="stat-label">Pendentes</div>
+        </div>
+
+        <div class="stat-card in-progress">
+          <div class="stat-icon">
+            <i class="fas fa-spinner"></i>
+          </div>
+          <div class="stat-number">{{ emAndamento }}</div>
+          <div class="stat-label">Em Andamento</div>
+        </div>
+
+        <div class="stat-card completed">
+          <div class="stat-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="stat-number">{{ concluidas }}</div>
+          <div class="stat-label">Concluídas</div>
+        </div>
+
+        <div class="stat-card weekly">
+          <div class="stat-icon">
+            <i class="fas fa-calendar-week"></i>
+          </div>
+          <div class="stat-number">{{ pendentes + emAndamento + concluidas }}</div>
+          <div class="stat-label">Total da Semana</div>
+        </div>
+      </div>
+
+      <!-- Gráfico de Progresso Semanal (fixo por enquanto) -->
+      <div class="stat-card" style="grid-column: 1 / -1;">
+        <h3 style="margin-bottom: 15px; color: #2c3e50;">
+          <i class="fas fa-chart-bar"></i> Progresso Semanal
+        </h3>
+        <div style="display: flex; justify-content: space-between; align-items: end; height: 80px; padding: 0 10px;">
+          <div *ngFor="let dia of ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom']; let i = index" style="display: flex; flex-direction: column; align-items: center;">
+            <div [style.height.px]="15 + i * 10"
+                 [style.background]="i < 3 ? '#4caf50' : i === 3 ? '#ff9800' : '#9e9e9e'"
+                 style="width: 20px; border-radius: 3px; margin-bottom: 5px;"></div>
+            <small>{{ dia }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+

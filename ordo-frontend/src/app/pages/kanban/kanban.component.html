@@ -2,7 +2,7 @@
   <!-- Header com a data atual -->
   <div class="row mb-4">
     <div class="col-12">
-      <h2 class="text-center mb-2">Quadro de Tarefas</h2>
+      <h2 class="text-center mb-2 pt-3">Quadro de Tarefas</h2>
       <p class="text-center text-muted">{{ getFormattedDate() }}</p>
     </div>
   </div>
@@ -18,13 +18,21 @@
         </h5>
         <div class="column-content">
           <div class="card mb-3 task-card" *ngFor="let tarefa of tarefasAFazer">
-            <div class="card-body">
+            <div class="card-body position-relative">
+              <!-- Botão deletar -->
+              <button class="btn btn-sm btn-light delete-btn"
+                      (click)="deleteTask(tarefa.id)"
+                      title="Excluir tarefa">
+                <i class="fas fa-trash-alt text-danger small"></i>
+              </button>
+
               <h6 class="card-title">{{ tarefa.titulo }}</h6>
               <p class="card-text">{{ tarefa.descricao }}</p>
               <button
                 class="btn btn-sm btn-outline-warning move-btn"
-                (click)="moveTask(tarefa.id, getNextStatus(tarefa.status))">
-                <i class="fas fa-arrow-right"></i>
+                (click)="moveTask(tarefa.id.toString(), getNextStatus(tarefa.status))">
+
+              <i class="fas fa-arrow-right"></i>
                 Mover para {{ getNextStatusLabel(tarefa.status) }}
               </button>
             </div>
@@ -46,12 +54,20 @@
         </h5>
         <div class="column-content">
           <div class="card mb-3 task-card in-progress" *ngFor="let tarefa of tarefasEmProgresso">
-            <div class="card-body">
+            <div class="card-body position-relative">
+              <!-- Botão deletar -->
+              <button class="btn btn-sm btn-light delete-btn"
+                      (click)="deleteTask(tarefa.id)"
+                      title="Excluir tarefa">
+                <i class="fas fa-trash-alt text-danger small"></i>
+              </button>
+
               <h6 class="card-title">{{ tarefa.titulo }}</h6>
               <p class="card-text">{{ tarefa.descricao }}</p>
               <button
                 class="btn btn-sm btn-outline-success move-btn"
-                (click)="moveTask(tarefa.id, getNextStatus(tarefa.status))">
+                (click)="moveTask(tarefa.id.toString(), getNextStatus(tarefa.status))"
+              >
                 <i class="fas fa-arrow-right"></i>
                 Mover para {{ getNextStatusLabel(tarefa.status) }}
               </button>
@@ -74,12 +90,20 @@
         </h5>
         <div class="column-content">
           <div class="card mb-3 task-card completed" *ngFor="let tarefa of tarefasConcluidas">
-            <div class="card-body">
+            <div class="card-body position-relative">
+              <!-- Botão deletar -->
+              <button class="btn btn-sm btn-light delete-btn"
+                      (click)="deleteTask(tarefa.id)"
+                      title="Excluir tarefa">
+                <i class="fas fa-trash-alt text-danger small"></i>
+              </button>
+
               <h6 class="card-title">{{ tarefa.titulo }}</h6>
               <p class="card-text">{{ tarefa.descricao }}</p>
               <button
                 class="btn btn-sm btn-outline-primary move-btn"
-                (click)="moveTask(tarefa.id, getNextStatus(tarefa.status))">
+                (click)="moveTask(tarefa.id.toString(), getNextStatus(tarefa.status))"
+              >
                 <i class="fas fa-redo"></i>
                 Mover para {{ getNextStatusLabel(tarefa.status) }}
               </button>
@@ -107,4 +131,5 @@
     [currentDate]="currentDate"
     (taskCreated)="closeModal()"
     (modalClosed)="closeModal()">
-  </app-new-task-modal></div>
+  </app-new-task-modal>
+</div>

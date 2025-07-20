@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import {TaskService} from '../../services/task.service';
-import { Task } from '../../services/task.service';
-import {NewTaskModalComponent} from '../../components/new-task-modal/new-task-modal.component';
+import { TaskService, Task } from '../../services/task.service';
+import { NewTaskModalComponent } from '../../components/new-task-modal/new-task-modal.component';
 
 @Component({
   selector: 'app-kanban',
@@ -25,7 +24,6 @@ export class KanbanComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Lê a data do queryParam ou usa a data atual
     this.route.queryParams.subscribe(params => {
       this.currentDate = params['date'] || this.getCurrentDate();
       this.loadTasks();
@@ -38,17 +36,20 @@ export class KanbanComponent implements OnInit {
   }
 
   private loadTasks(): void {
-    const tasks = this.taskService.getTasksByDate(this.currentDate);
-
-    this.tarefasAFazer = tasks.filter(task => task.status === 'todo');
-    this.tarefasEmProgresso = tasks.filter(task => task.status === 'in-progress');
-    this.tarefasConcluidas = tasks.filter(task => task.status === 'completed');
+    this.taskService.getTasksByDate(this.currentDate).subscribe(tasks => {
+      this.tarefasAFazer = tasks.filter(task => task.status === 'todo');
+      this.tarefasEmProgresso = tasks.filter(task => task.status === 'in-progress');
+      this.tarefasConcluidas = tasks.filter(task => task.status === 'completed');
+    });
   }
 
-  moveTask(taskId: string, newStatus: 'todo' | 'in-progress' | 'completed') {
-    this.taskService.updateTaskStatus(taskId, newStatus);
-    this.loadTasks();
+  moveTask(id: string, newStatus: string) {
+    this.taskService.updateTaskStatus(id, newStatus).subscribe({
+      next: () => this.loadTasks(),
+      error: err => console.error(err)
+    });
   }
+
   getNextStatus(currentStatus: string): 'todo' | 'in-progress' | 'completed' {
     switch (currentStatus) {
       case 'todo': return 'in-progress';
@@ -60,14 +61,10 @@ export class KanbanComponent implements OnInit {
 
   getNextStatusLabel(currentStatus: string): string {
     switch (currentStatus) {
-      case 'todo':
-        return 'Em Progresso';
-      case 'in_progress':
-        return 'Concluído';
-      case 'done':
-        return 'A Fazer';
-      default:
-        return 'A Fazer';
+      case 'todo': return 'Em Progresso';
+      case 'in-progress': return 'Concluído';
+      case 'completed': return 'A Fazer';
+      default: return 'A Fazer';
     }
   }
 
@@ -77,7 +74,7 @@ export class KanbanComponent implements OnInit {
 
   closeModal(): void {
     this.isModalOpen = false;
-    this.loadTasks(); // Recarrega as tarefas após fechar o modal
+    this.loadTasks();
   }
 
   getFormattedDate(): string {
@@ -86,7 +83,26 @@ export class KanbanComponent implements OnInit {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
+      timeZone: 'America/Sao_Paulo'
     });
   }
+  deleteTask(id: number | undefined) {
+    if (!id) return;
+    this.taskService.deleteTask(id.toString()).subscribe({
+      next: () => {
+        this.tarefasAFazer = this.tarefasAFazer.filter(t => t.id !== id);
+        this.tarefasEmProgresso = this.tarefasEmProgresso.filter(t => t.id !== id);
+        this.tarefasConcluidas = this.tarefasConcluidas.filter(t => t.id !== id);
+      },
+      error: (err) => {
+        console.error('Erro ao deletar tarefa:', err);
+      }
+    });
+  }
+
+
+
+
 }
+

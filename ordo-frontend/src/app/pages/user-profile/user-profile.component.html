@@ -1,1 +1,74 @@
-<p>user-profile works!</p>
+<div class="container-fluid mt-5 ">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-6">
+      <div class="profile-container">
+        <!-- Header -->
+        <div class="profile-header">
+          <i class="fas fa-user-circle"></i>
+          <h2>Perfil do Usuário</h2>
+        </div>
+
+        <!-- User Info Card -->
+        <div class="user-info-card">
+          <div class="info-label">
+            <i class="fas fa-envelope"></i>
+            Email
+          </div>
+          <div class="info-value">{{ email }}</div>
+        </div>
+
+        <!-- Update Name Form -->
+        <div class="form-section name-section" *ngIf="profileForm">
+          <div class="section-header">
+            <i class="fas fa-user-edit"></i>
+            <h4>Atualizar Nome</h4>
+          </div>
+          <form [formGroup]="profileForm" (ngSubmit)="updateName()">
+            <div class="mb-3">
+              <label class="form-label">
+                <i class="fas fa-user"></i>
+                Nome
+              </label>
+              <input class="form-control" formControlName="name" placeholder="Digite seu nome">
+            </div>
+            <button class="btn btn-custom btn-update-name" type="submit">
+              <i class="fas fa-save"></i>
+              Atualizar Nome
+            </button>
+          </form>
+        </div>
+
+        <!-- Custom Divider -->
+        <hr class="custom-divider" *ngIf="passwordForm">
+
+        <!-- Update Password Form -->
+        <div class="form-section password-section" *ngIf="passwordForm">
+          <div class="section-header">
+            <i class="fas fa-key"></i>
+            <h4>Alterar Senha</h4>
+          </div>
+          <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()">
+            <div class="mb-3">
+              <label class="form-label">
+                <i class="fas fa-lock"></i>
+                Senha Atual
+              </label>
+              <input type="password" class="form-control" formControlName="currentPassword" placeholder="Digite sua senha atual">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">
+                <i class="fas fa-lock-open"></i>
+                Nova Senha
+              </label>
+              <input type="password" class="form-control" formControlName="newPassword" placeholder="Digite sua nova senha">
+            </div>
+            <button class="btn btn-custom btn-update-password" type="submit">
+              <i class="fas fa-shield-alt"></i>
+              Atualizar Senha
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
